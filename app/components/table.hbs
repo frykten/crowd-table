@@ -1,0 +1,37 @@
+{{!-- TODO: Add selection column --}}
+<EmberTable summary="This is not passed by the addon" as |t|>
+  <t.head @columns={{@columns}} />
+
+  <t.body
+    @rows={{@rows}}
+    {{!-- TODO: Add tests for selection --}}
+    @checkboxSelectionMode="multiple"
+    @rowSelectionMode="multiple"
+    @rowToggleMode={{true}}
+    @onSelect={{@onSelect}}
+    @selection={{@selectedRows}}
+    as |b|
+  >
+    <b.row as |r|>
+      <r.cell as |value column row|>
+        {{#if column.component}}
+          {{component column.component value=value}}
+        {{!-- TODO: refactor into cell component/do not compare string --}}
+        {{else if (eq row.status "Available")}}
+          <span class="table-cell-available-status"></span>
+          {{value}}
+        {{else}}
+          {{value}}
+        {{/if}}
+      </r.cell>
+    </b.row>
+  </t.body>
+
+  {{#unless @rows.length}}
+    <tfoot>
+      <tr>
+        <td colspan="100%">No results were found</td>
+      </tr>
+    </tfoot>
+  {{/unless}}
+</EmberTable>
