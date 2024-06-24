@@ -1,0 +1,41 @@
+{{!--
+  API:
+    onSelectAll
+    onUnselectAll
+    selectionState (none,indeterminate,all)
+    numberOfSelectedItems (or "None selected")
+--}}
+
+<div class="toolbar" role="toolbar" aria-labelledby={{@tableId}}>
+  {{!-- TODO: refactor checkbox into generic component --}}
+  <label class="checkbox-container">
+    <input
+      aria-label={{if
+        (eq @selectionState "none")
+        "Select all table rows"
+        "Unselect all table rows"
+      }}
+      type="checkbox"
+      checked={{unless (eq @selectionState "none") "true" ""}}
+      indeterminate={{if (eq @selectionState "indeterminate") "indeterminate" ""}}
+      {{on
+        "click"
+        (if
+          (eq @selectionState "none")
+          @onSelectAll
+          @onUnselectAll
+        )
+      }}
+    >
+    <span class="checkmark"></span>
+    <span>
+      {{#if @numberOfSelectedItems}}
+        Selected {{@numberOfSelectedItems}}
+      {{else}}
+        None selected
+      {{/if}}
+    </span>
+  </label>
+
+  {{yield}}
+</div>
