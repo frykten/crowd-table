@@ -1,0 +1,15 @@
+<TableWithToolbar
+  @canSelect={{true}}
+  @columns={{this.columns}}
+  @rows={{this.rows}}
+  @selection={{this.selection}}
+>
+  <:toolbar>
+    <button
+      class="list-toolbar-export"
+      disabled={{if this.canExport false true}}
+      type="button"
+      {{on "click" this.exportList}}
+    >Export selected documents</button>
+  </:toolbar>
+</TableWithToolbar>

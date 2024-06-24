@@ -1,0 +1,23 @@
+{{!-- todo finish toolbar quickly --}}
+<div class="table-wrapper">
+  <Toolbar
+    @tableId="table-id"
+
+    @onSelectAll={{fn (mut @selection) @rows}}
+    @onUnselectAll={{fn (mut @selection) (take 0 @rows)}}
+
+    @numberOfSelectedItems={{@selection.length}}
+    @selectionState={{this.selectionState}}
+  >
+    {{yield to="toolbar"}}
+  </Toolbar>
+  <Table
+    @columns={{this.columns}}
+    @rows={{@rows}}
+    @selection={{@selection}}
+    {{!-- @onSelect={{this.onSelect}} --}}
+    @onSelect={{fn (mut @selection)}}
+  />
+</div>
+
+{{!-- todo: rather make it a component "export-list-table" --}}
