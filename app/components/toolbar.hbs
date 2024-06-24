@@ -1,14 +1,6 @@
-{{!--
-  API:
-    onSelectAll
-    onUnselectAll
-    selectionState (none,indeterminate,all)
-    numberOfSelectedItems (or "None selected")
---}}
-
 <div class="toolbar" role="toolbar" aria-labelledby={{@tableId}}>
   {{!-- TODO: refactor checkbox into generic component --}}
-  <label class="checkbox-container">
+  <label class="checkbox-container-broken">
     <input
       aria-label={{if
         (eq @selectionState "none")
@@ -21,13 +13,13 @@
       {{on
         "click"
         (if
-          (eq @selectionState "none")
-          @onSelectAll
+          (eq @selectionState "all")
           @onUnselectAll
+          @onSelectAll
         )
       }}
     >
-    <span class="checkmark"></span>
+    {{!-- <span class="checkmark"></span> --}}
     <span>
       {{#if @numberOfSelectedItems}}
         Selected {{@numberOfSelectedItems}}

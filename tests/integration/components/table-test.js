@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { render, waitFor } from '@ember/test-helpers';
+import { click, render, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 import { faker } from '@faker-js/faker';
@@ -88,7 +88,7 @@ module('Integration | Component | table', function (hooks) {
     await render(hbs`<Table @columns={{this.columns}} @rows={{this.rows}} />`);
     await waitFor('tr:nth-of-type(2)');
 
-    assert.true(false, 'Not implemented yet')
+    assert.true(false, 'Not implemented yet');
 
     // this.rows.forEach((row, index) => {
     //   assert.dom(`tr:nth-of-type(${index + 1}) td:nth-of-type(2)`).hasText('Test Cell Renderer Component content');
@@ -97,19 +97,22 @@ module('Integration | Component | table', function (hooks) {
     // TODO: Add Axe a11y testing
   });
 
+  // eslint-disable-next-line qunit/require-expect
   test(`
     Given a table component
       With the ability to select rows
-    Then the first column header has no visible text
-      And the first column cells are checkboxes
+    When I select the first row
+    Then the onSelect function is called with first row as param
   `, async function (assert) {
-    await render(hbs`<Table @columns={{this.columns}} @rows={{this.rows}} @canSelect={{true}} />`);
+    this.onSelect = (selection) => assert.strictEqual(selection, [this.rows[0]]);
+    await render(
+      hbs`<Table @columns={{this.columns}} @rows={{this.rows}} @onSelect={{this.onSelect}} />`,
+    );
     await waitFor('tr:nth-of-type(2)');
 
-    assert.true(false, 'Not implemented yet')
+    await click('tr:nth-of-type(1) td:nth-of-type(2) [role="checkbox"]');
 
-    // this.rows.forEach((_row, index) => {
-    //   assert.dom(`tr:nth-of-type(${index + 1}) td:nth-of-type(1) [role="checkbox"]`).isVisible();
-    // });
+    assert.expect(1);
+    assert.true(false, 'Not implemented yet');
   });
 });

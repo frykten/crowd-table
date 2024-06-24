@@ -9,17 +9,19 @@
     @rowSelectionMode="multiple"
     @rowToggleMode={{true}}
     @onSelect={{@onSelect}}
-    @selection={{@selectedRows}}
+    @selection={{@selection}}
     as |b|
   >
     <b.row as |r|>
-      <r.cell as |value column row|>
+      <r.cell as |value column|>
         {{#if column.component}}
           {{component column.component value=value}}
-        {{!-- TODO: refactor into cell component/do not compare string --}}
-        {{else if (eq row.status "Available")}}
-          <span class="table-cell-available-status"></span>
-          {{value}}
+        {{!-- TODO: refactor into its own cell component --}}
+        {{else if (eq column.valuePath 'status')}}
+          {{#if (eq value "available")}}
+            <span class="table-cell-available-status"></span>
+          {{/if}}
+          {{capitalize value}}
         {{else}}
           {{value}}
         {{/if}}
