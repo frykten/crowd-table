@@ -21,7 +21,9 @@ module('Integration | Component | table', function (hooks) {
       },
     ];
 
-    this.rows = Array.from({ length: faker.number.int({ min: 2, max: 5 })}).map(row => ({
+    this.rows = Array.from({
+      length: faker.number.int({ min: 2, max: 5 }),
+    }).map(() => ({
       productName: faker.commerce.productName(),
       productMaterial: faker.commerce.productMaterial(),
     }));
@@ -50,8 +52,12 @@ module('Integration | Component | table', function (hooks) {
     });
 
     this.rows.forEach((row, index) => {
-      assert.dom(`tr:nth-of-type(${index + 1}) td:first-of-type`).hasText(row.productName);
-      assert.dom(`tr:nth-of-type(${index + 1}) td:nth-of-type(2)`).hasText(row.productMaterial);
+      assert
+        .dom(`tr:nth-of-type(${index + 1}) td:first-of-type`)
+        .hasText(row.productName);
+      assert
+        .dom(`tr:nth-of-type(${index + 1}) td:nth-of-type(2)`)
+        .hasText(row.productMaterial);
     });
 
     // TODO: Add Axe a11y testing
@@ -104,7 +110,8 @@ module('Integration | Component | table', function (hooks) {
     When I select the first row
     Then the onSelect function is called with first row as param
   `, async function (assert) {
-    this.onSelect = (selection) => assert.strictEqual(selection, [this.rows[0]]);
+    this.onSelect = (selection) =>
+      assert.strictEqual(selection, [this.rows[0]]);
     await render(
       hbs`<Table @columns={{this.columns}} @rows={{this.rows}} @onSelect={{this.onSelect}} />`,
     );

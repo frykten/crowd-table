@@ -1,6 +1,6 @@
 /* eslint-disable qunit/require-expect */
 import { module, test } from 'qunit';
-import { render, pauseTest, waitFor, click } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 import { faker } from '@faker-js/faker';
@@ -76,7 +76,9 @@ module('Integration | Component | toolbar', function (hooks) {
     `);
 
     assert.dom('[role="toolbar"] input[type="checkbox"]').isChecked();
-    assert.dom('[role="toolbar"] input[type="checkbox"]').hasProperty('indeterminate', true);
+    assert
+      .dom('[role="toolbar"] input[type="checkbox"]')
+      .hasProperty('indeterminate', true);
   });
 
   test(`
@@ -94,7 +96,9 @@ module('Integration | Component | toolbar', function (hooks) {
       />
     `);
 
-    assert.dom('[role="toolbar"] label').containsText(`Selected ${this.numberOfSelectedItems}`);
+    assert
+      .dom('[role="toolbar"] label')
+      .containsText(`Selected ${this.numberOfSelectedItems}`);
   });
 
   test(`
@@ -119,7 +123,6 @@ module('Integration | Component | toolbar', function (hooks) {
 
     assert.expect(1);
   });
-
 
   test(`
     Given a toolbar component
